@@ -79,6 +79,13 @@ jobs:
       - name: Install Dependencies
         run: |
           brew install ldid dpkg make wget unzip jq pipx
+          wget -q https://githubusercontent.com -O $THEOS/include/cvpx/vpx_decoder.h
+          wget -q https://githubusercontent.com -O $THEOS/include/cvpx/vpx_codec.h
+          wget -q https://githubusercontent.com -O $THEOS/include/david/david.h
+          wget -q https://githubusercontent.com -O $THEOS/include/david/data.h
+          wget -q https://githubusercontent.com -O $THEOS/include/david/picture.h
+        env:
+          THEOS: ${{ github.workspace }}/theos
 
       - name: Set PATH
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH
