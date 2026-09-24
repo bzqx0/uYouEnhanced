@@ -80,11 +80,19 @@ jobs:
         run: |
           brew install ldid dpkg make wget unzip jq pipx
                     
-          mkdir -p $THEOS/include/cvpx
+          mkdir -p $THEOS/include/vpx
+          mkdir -p $THEOS/include/david
           
-          # Corrected URL for VPX headers
-          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_decoder.h" -O $THEOS/include/cvpx/vpx_decoder.h
-          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_codec.h" -O $THEOS/include/cvpx/vpx_codec.h
+          # Fix the vpx headers (correct folder name)
+          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_decoder.h" -O $THEOS/include/vpx/vpx_decoder.h
+          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_codec.h" -O $THEOS/include/vpx/vpx_codec.h
+          
+          # Grab the missing david headers from the YTUHD source
+          git clone --depth 1 https://github.com/arichornlover/YTUHD.git /tmp/YTUHD
+          cp /tmp/YTUHD/Headers/david/*.h $THEOS/include/david/ 2>/dev/null || cp /tmp/YTUHD/Headers/*.h $THEOS/include/david/ 2>/dev/null || true
+          find /tmp/YTUHD -name "david.h" -exec cp {} $THEOS/include/david/ \;
+          find /tmp/YTUHD -name "data.h" -exec cp {} $THEOS/include/david/ \;
+          find /tmp/YTUHD -name "picture.h" -exec cp {} $THEOS/include/david/ \;
           
           echo "YTUHD Dependencies successfully injected!"
         env:
