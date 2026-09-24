@@ -79,8 +79,17 @@ jobs:
       - name: Install Dependencies
         run: |
           brew install ldid dpkg make wget unzip jq pipx
-
-
+                    
+          mkdir -p $THEOS/include/cvpx
+          
+          # Corrected URL for VPX headers
+          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_decoder.h" -O $THEOS/include/cvpx/vpx_decoder.h
+          wget -q "https://raw.githubusercontent.com/webmproject/libvpx/main/vpx/vpx_codec.h" -O $THEOS/include/cvpx/vpx_codec.h
+          
+          echo "YTUHD Dependencies successfully injected!"
+        env:
+          THEOS: ${{ github.workspace }}/theos
+          
       - name: Set PATH
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH
 
