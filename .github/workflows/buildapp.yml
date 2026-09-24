@@ -79,20 +79,6 @@ jobs:
       - name: Install Dependencies
         run: |
           brew install ldid dpkg make wget unzip jq pipx
-                    
-          mkdir -p $THEOS/include/cvpx
-          mkdir -p $THEOS/include/david
-          
-          wget -q "https://githubusercontent.com" -O $THEOS/include/cvpx/vpx_decoder.h
-          wget -q "https://githubusercontent.com" -O $THEOS/include/cvpx/vpx_codec.h
-          
-          wget -q "https://githubusercontent.com" -O $THEOS/include/david/david.h
-          wget -q "https://githubusercontent.com" -O $THEOS/include/david/data.h
-          wget -q "https://githubusercontent.com" -O $THEOS/include/david/picture.h
-          
-          echo "YTUHD Dependencies successfully injected!"
-        env:
-          THEOS: ${{ github.workspace }}/theos
 
 
       - name: Set PATH
